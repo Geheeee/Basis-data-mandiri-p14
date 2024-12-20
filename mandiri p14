@@ -1,0 +1,69 @@
+-- Membuat database
+CREATE DATABASE mahasiswa_db;
+
+-- Menggunakan database
+USE mahasiswa_db;
+
+-- Membuat tabel jurusan
+CREATE TABLE jurusan (
+    kode_jurusan VARCHAR(5) PRIMARY KEY,
+    nama_jurusan VARCHAR(50),
+    ketua_jurusan VARCHAR(50)
+);
+
+-- Membuat tabel biodata
+CREATE TABLE biodata (
+    no_mahasiswa INT PRIMARY KEY,
+    kode_jurusan VARCHAR(5),
+    nama_mahasiswa VARCHAR(50),
+    alamat VARCHAR(50),
+    ipk DECIMAL(3, 2),
+    FOREIGN KEY (kode_jurusan) REFERENCES jurusan(kode_jurusan)
+);
+
+-- Mengisi data tabel jurusan
+INSERT INTO jurusan (kode_jurusan, nama_jurusan, ketua_jurusan)
+VALUES
+('KD01', 'Sistem Informasi', 'Harnaningrum,S.Si'),
+('KD02', 'Teknik Informatika', 'Enny Sela,S.Kom.,M.Kom'),
+('KD03', 'Teknik Komputer', 'Berta Bednar,S.Si,M.T');
+
+-- Mengisi data tabel biodata
+INSERT INTO biodata (no_mahasiswa, kode_jurusan, nama_mahasiswa, alamat, ipk)
+VALUES
+(210089, 'KD01', 'Rina Gunawan', 'Denpasar', 3.0),
+(210090, 'KD03', 'Gani Suprapto', 'Singaraja', 3.5),
+(210012, 'KD02', 'Alexandra', 'Nusa Dua', 3.0),
+(210099, 'KD02', 'Nadine', 'Gianyar', 3.2),
+(210002, 'KD01', 'Rizal Samurai', 'Denpasar', 3.7);
+
+-- Menambahkan data baru
+INSERT INTO biodata (no_mahasiswa, kode_jurusan, nama_mahasiswa, alamat, ipk)
+VALUES (210100, 'KD04', 'Siti Aminah', 'Tabanan', 3.8);
+
+-- Mengubah data
+UPDATE biodata
+SET nama_mahasiswa = 'Rina Gunawan Astuti'
+WHERE nama_mahasiswa = 'Rina Gunawan';
+
+UPDATE jurusan
+SET kode_jurusan = 'KM01'
+WHERE kode_jurusan = 'KD01';
+
+UPDATE biodata
+SET no_mahasiswa = 210098
+WHERE no_mahasiswa = 210089;
+
+UPDATE biodata
+SET ipk = 3.3
+WHERE ipk = 3.0;
+
+UPDATE biodata
+SET kode_jurusan = 'KD05'
+WHERE kode_jurusan = 'KD03';
+
+-- Contoh JOIN
+-- INNER JOIN
+SELECT biodata.no_mahasiswa, biodata.nama_mahasiswa, jurusan.nama_jurusan
+FROM biodata
+INNER JOIN jurusan ON biodata.kode_jurusan = jurusan.kode_jurusan;
